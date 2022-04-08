@@ -1,4 +1,4 @@
-package com.gymroutines.newarchitecture.modules;
+package com.roda.gymroutines.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

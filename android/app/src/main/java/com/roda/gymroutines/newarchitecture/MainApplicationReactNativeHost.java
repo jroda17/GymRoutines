@@ -1,4 +1,4 @@
-package com.gymroutines.newarchitecture;
+package com.roda.gymroutines.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.gymroutines.BuildConfig;
-import com.gymroutines.newarchitecture.components.MainComponentsRegistry;
-import com.gymroutines.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.roda.gymroutines.BuildConfig;
+import com.roda.gymroutines.newarchitecture.components.MainComponentsRegistry;
+import com.roda.gymroutines.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

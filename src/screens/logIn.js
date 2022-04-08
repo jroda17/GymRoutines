@@ -5,14 +5,16 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Button} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 
+
 export default function LogIn() {
   const navigation = useNavigation();
+
   const navigateToSignup = () => {
     navigation.navigate('SignUp');
   };
+
   return (
     <KeyboardAvoidingView>
-      <Text>LogIn</Text>
       <Input placeholder="Password" secureTextEntry={true} />
       <Input
         placeholder="Comment"

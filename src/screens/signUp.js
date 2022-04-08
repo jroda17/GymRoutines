@@ -1,5 +1,11 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import {Button, Input} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
@@ -21,8 +27,12 @@ export default function SignUp() {
 
   const register = async () => {
     try {
-      let ans = await auth().createUserWithEmailAndPassword(email.toLocaleLowerCase(), password);
+      let ans = await auth().createUserWithEmailAndPassword(
+        email.toLocaleLowerCase(),
+        password,
+      );
       if (ans) {
+        auth().currentUser.sendEmailVerification();
         console.log(ans);
       }
     } catch (error) {
@@ -31,20 +41,25 @@ export default function SignUp() {
   };
 
   return (
-    <View style={styles.container}>
-      <Input
-        placeholder="Comment"
-        onChangeText={text => setEmail(text)}
-        leftIcon={<Icon name="user" size={24} color="black" />}
-      />
-      <Input
-        placeholder="Password"
-        secureTextEntry={true}
-        onChangeText={text => setPassword(text)}
-        leftIcon={<Icon name="user" size={24} color="black" />}
-      />
-      <Button title="Registrarte" onPress={handleRegister} />
-    </View>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}>
+      <View style={styles.container}>
+        <Input
+          placeholder="Comment"
+          onChangeText={text => setEmail(text)}
+          leftIcon={<Icon name="user" size={24} color="black" />}
+        />
+        <Input
+          placeholder="Password"
+          secureTextEntry={true}
+          onChangeText={text => setPassword(text)}
+          leftIcon={<Icon name="user" size={24} color="black" />}
+        />
+        <Button title="Registrarte" onPress={handleRegister} />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 

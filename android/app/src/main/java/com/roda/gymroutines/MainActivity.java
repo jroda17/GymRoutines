@@ -1,4 +1,4 @@
-package com.gymroutines;
+package com.roda.gymroutines;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
