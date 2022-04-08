@@ -33,7 +33,7 @@ export default function SignUp() {
       );
       if (ans) {
         auth().currentUser.sendEmailVerification();
-        console.log(ans);
+        auth().signOut();
       }
     } catch (error) {
       console.log(error.message);

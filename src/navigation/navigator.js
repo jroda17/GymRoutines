@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignUp from '../screens/signUp';
 import LogIn from '../screens/logIn';
 import auth from '@react-native-firebase/auth';
+import MainTabNavigator from './mainTabNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,18 +16,11 @@ export default function MainNavigator() {
   }, []);
 
   return (
-    <Stack.Navigator>
+    <>
       {user ? (
-        <Stack.Screen
-          name="Login"
-          component={LogIn}
-          options={{
-            headerTitle: '',
-            headerTransparent: true,
-          }}
-        />
+        <MainTabNavigator />
       ) : (
-        <>
+        <Stack.Navigator>
           <Stack.Screen
             name="Login"
             component={LogIn}
@@ -44,8 +38,8 @@ export default function MainNavigator() {
               headerTransparent: true,
             }}
           />
-        </>
+        </Stack.Navigator>
       )}
-    </Stack.Navigator>
+    </>
   );
 }
