@@ -22,9 +22,7 @@ export default function MainNavigator() {
           component={LogIn}
           options={{
             headerTitle: '',
-            headerStyle: {
-              backgroundColor: 'transparent',
-            },
+            headerTransparent: true,
           }}
         />
       ) : (
@@ -34,9 +32,7 @@ export default function MainNavigator() {
             component={LogIn}
             options={{
               headerTitle: '',
-              headerStyle: {
-                backgroundColor: 'transparent',
-              },
+              headerTransparent: true,
             }}
           />
           <Stack.Screen
@@ -45,9 +41,7 @@ export default function MainNavigator() {
             options={{
               headerShown: true,
               headerTitle: '',
-              headerStyle: {
-                backgroundColor: 'transparent',
-              },
+              headerTransparent: true,
             }}
           />
         </>
