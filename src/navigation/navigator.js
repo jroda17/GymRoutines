@@ -4,17 +4,37 @@ import SignUp from '../screens/signUp';
 import LogIn from '../screens/logIn';
 import auth from '@react-native-firebase/auth';
 import MainTabNavigator from './mainTabNavigator';
+import firestore from '@react-native-firebase/firestore';
+import {useSelector, useDispatch} from 'react-redux';
+import {setUser, deleteUser} from '../store/actions';
 
 const Stack = createNativeStackNavigator();
 
 export default function MainNavigator() {
-  const [user, setUser] = React.useState(null);
+  const user = useSelector(state => state.user.user);
+  const dispatch = useDispatch();
+
   React.useEffect(() => {
-    auth().onAuthStateChanged(user => {
-      setUser(user);
+    auth().onAuthStateChanged(userState => {
+      if (userState?.emailVerified) {
+        dispatch(setUser(getData()));
+      } else {
+        dispatch(deleteUser());
+      }
     });
   }, []);
 
+  const getData = async () => {
+    return await firestore()
+      .collection('users')
+      .where('id', '==', auth().currentUser.uid)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          return doc.data();
+        });
+      });
+  };
   return (
     <>
       {user ? (

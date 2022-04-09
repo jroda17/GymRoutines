@@ -15,6 +15,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useHeaderHeight} from '@react-navigation/elements';
 import auth from '@react-native-firebase/auth';
 import {validatePassword, validateEmail} from '../constants/regex';
+import Snackbar from 'react-native-snackbar';
 
 export default function LogIn() {
   const [email, setEmail] = React.useState('');
@@ -25,11 +26,19 @@ export default function LogIn() {
   });
   const headerHeight = useHeaderHeight();
   const navigation = useNavigation();
+  const emailRef = React.useRef();
   const passwordRef = React.useRef();
   const [error, setError] = React.useState({
     mail: false,
     password: false,
   });
+
+  React.useEffect(() => {
+    setError({
+      mail: false,
+      password: false,
+    });
+  }, [email, password]);
 
   const navigateToSignup = () => {
     navigation.navigate('SignUp');
@@ -51,25 +60,37 @@ export default function LogIn() {
 
   const login = async () => {
     Keyboard.dismiss();
-    const emailValidation = validateEmail(email);
-    const passwordValidation = validatePassword(password);
-    if (!emailValidation || !passwordValidation) {
+    const emailValidation = !validateEmail(email);
+    const passwordValidation = !validatePassword(password);
+    if (emailValidation || passwordValidation) {
       setError({
-        mail: !emailValidation,
-        password: !passwordValidation,
+        mail: emailValidation,
+        password: passwordValidation,
       });
+      Snackbar.show({
+        text: 'Verifica los datos.',
+        duration: Snackbar.LENGTH_LONG,
+      });
+      passwordRef.current.shake();
+      emailRef.current.shake();
       return;
     }
     try {
       const ans = await auth().signInWithEmailAndPassword(email, password);
-      if (ans.user.emailVerified) {
-        console.log(ans);
-      } else {
+      if (!ans.user.emailVerified) {
         ans.user.sendEmailVerification();
         auth().signOut();
+        Snackbar.show({
+          text: 'Verifica el mail antes de continuar',
+          duration: Snackbar.LENGTH_LONG,
+        });
       }
     } catch (error) {
       console.log(error.message);
+      Snackbar.show({
+        text: 'Ocurrio un error. Intenta de nuevo',
+        duration: Snackbar.LENGTH_LONG,
+      });
     }
   };
 
@@ -90,6 +111,7 @@ export default function LogIn() {
               autoComplete="email"
               returnKeyType="next"
               onEndEditing={() => passwordRef.current.focus()}
+              ref={emailRef}
             />
             <Input
               label="Contraseña"
